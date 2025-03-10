@@ -2,11 +2,11 @@
   "tasks": [
     {
       "id": "93a0fa32-de7a-48e9-8975-5ff1fa00f157",
-      "title": "User criacao",
-      "description": "Rota para fazer tudo sobre usuario",
+      "title": "usuario",
+      "description": "description",
       "completed_at": null,
-      "created_at": "2025-03-09T17:49:47.607Z",
-      "updated_at": "2025-03-09T17:49:47.607Z"
+      "created_at": null,
+      "updated_at": "2025-03-10T18:33:18.530Z"
     },
     {
       "id": "2f8e8dae-d193-413f-aef4-5fd1d5587e70",
