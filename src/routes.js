@@ -1,6 +1,7 @@
 import { DatabaseCSV } from "./databaseCSV.js";
 import { randomUUID } from "node:crypto";
 import { routeRegex } from "./utils/route-regex.js";
+import path from "node:path";
 
 const database = new DatabaseCSV()
 
@@ -83,6 +84,22 @@ export const routes = [
                     task: task
                 }))
             }
+        }
+    },
+    {
+        method: 'DELETE',
+        path: routeRegex('/tasks/:id'),
+        handler: async (req, res) => {
+            
+            const { id } = req.params
+            
+            const task = database.delete('tasks', id)
+
+            res.statusCode = 204
+            return res.end(JSON.stringify({
+                mensagem: "Task deleted",
+                task: task
+            }))
         }
     }
 ]
