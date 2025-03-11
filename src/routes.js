@@ -34,9 +34,9 @@ export const routes = [
                 id: randomUUID(),
                 title,
                 description,
-                completed_at: completed_at || null,
-                created_at: created_at || new Date().getTime(),
-                updated_at: updated_at || new Date().getTime()
+                completed_at: null,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
             }
 
             database.insert('tasks', task)
@@ -63,9 +63,12 @@ export const routes = [
         handler: async (req, res) => {
 
             const { id } = req.params
-            const { title, description, completed_at, created_at, updated_at } = req.body
+            const { title, description } = req.body
 
-            const reqBody = req.body
+            const reqBody = database.selectOne('tasks', id)
+
+            console.log(reqBody);
+            
 
             if (!title || !description) {
                 res.statusCode = 400
@@ -73,9 +76,9 @@ export const routes = [
             } else {
                 const task = database.update('tasks', id,  {
                     ...reqBody,
-                    completed_at: completed_at || null,
-                    created_at: created_at || null,
-                    updated_at: updated_at || new Date()
+                    title,
+                    description,
+                    updated_at:  new Date().toISOString()
 
                 })
                 res.statusCode = 201
@@ -100,6 +103,30 @@ export const routes = [
                 mensagem: "Task deleted",
                 task: task
             }))
+        }
+    },
+    {
+        method: 'PATCH',
+        path: routeRegex('/tasks/:id/complete'),
+        handler: (req, res) => {
+
+            const { id } = req.params
+
+            const reqBody = database.selectOne('tasks', id)
+
+            res.statusCode = 200
+
+            const task = database.update('tasks', id,  {
+                ...reqBody,
+                completed_at: new Date().toISOString()
+            })
+
+            return res.end(JSON.stringify({
+                mensagem: "Task completed",
+                task: task
+            }))
+
+
         }
     }
 ]

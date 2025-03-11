@@ -68,8 +68,4 @@ export class DatabaseCSV {
             return row
         }
     }
-
-    patch(table, id, data) {
-
-    }
 }
